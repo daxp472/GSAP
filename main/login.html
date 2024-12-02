@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GSAP Advanced Login</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #0f172a;
+            overflow: hidden;
+            color: #fff;
+            position: relative; /* Ensures child elements align properly */
+        }
+
+        video#myVideo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(50%);
+        }
+
+        .login-container {
+            width: 350px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            opacity: 0; /* Initially hidden for GSAP animation */
+        }
+
+        .login-container img {
+            display: block;
+            margin: 0 auto 20px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #e2e8f0;
+        }
+
+        .login-container label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #e2e8f0;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .login-container input:focus {
+            outline: none;
+            box-shadow: 0 0 8px #38bdf8;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 12px;
+            background: #38bdf8;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .login-container button:hover {
+            background: #0ea5e9;
+        }
+
+        .message,
+        .error-message {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 10px;
+            color: white;
+        }
+
+        .message {
+            color: #10b981;
+        }
+
+        .error-message {
+            color: #f87171;
+        }
+    </style>
+</head>
+
+<body>
+    <video autoplay muted loop id="myVideo">
+        <source src="/main/assets/log.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="login-container">
+        <img src="/main/assets/images/logo.jpeg" alt="Logo">
+        <h2>GSAP Login</h2>
+        <label for="username">Username:</label>
+        <input type="text" id="username" placeholder="Enter your username" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" placeholder="Enter your password" required>
+        <button id="login-btn">Login</button>
+        <div class="message" id="message"></div>
+        <div class="error-message" id="error-message"></div>
+    </div>
+
+    <script>
+        gsap.fromTo(
+            ".login-container",
+            { opacity: 0, scale: 0.8, y: -50 },
+            { opacity: 1, scale: 1, y: 0, duration: 1, ease: "bounce.out" }
+        );
+
+        const loginBtn = document.getElementById("login-btn");
+        const usernameInput = document.getElementById("username");
+        const passwordInput = document.getElementById("password");
+        const messageDiv = document.getElementById("message");
+
+        // Login 
+        loginBtn.addEventListener("click", () => {
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
+
+            if (username && password) {
+                const userData = { username, password };
+                localStorage.setItem("user-data", JSON.stringify(userData));
+
+                
+                gsap.to(".login-container", { scale: 1.05, duration: 0.3, yoyo: true, repeat: 1 });
+                messageDiv.textContent = "Login data stored successfully!";
+            } else {
+                messageDiv.textContent = "Please fill in both fields!";
+            }
+        });
+    </script>
+</body>
+
+</html>
