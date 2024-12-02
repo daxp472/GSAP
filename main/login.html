@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GSAP Advanced Login</title>
+    <title>GSAP Login</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
         body {
@@ -120,7 +120,7 @@
     </video>
 
     <div class="login-container">
-        <img src="/main/assets/images/logo.jpeg" alt="Logo">
+        <img onclick="window.location.href='index.html'" src="/main/assets/images/logo.jpeg" alt="Logo">
         <h2>GSAP Login</h2>
         <label for="username">Username:</label>
         <input type="text" id="username" placeholder="Enter your username" required>
@@ -153,7 +153,6 @@
                 localStorage.setItem("user-data", JSON.stringify(userData));
 
                 
-                gsap.to(".login-container", { scale: 1.05, duration: 0.3, yoyo: true, repeat: 1 });
                 messageDiv.textContent = "Login data stored successfully!";
             } else {
                 messageDiv.textContent = "Please fill in both fields!";
